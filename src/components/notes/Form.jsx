@@ -1,6 +1,9 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { Box, TextField, ClickAwayListener } from '@mui/material'
 import { styled } from '@mui/material/styles';
+import { v4 as uuid } from 'uuid';
+
+import { DataContext } from '../../context/DataProvider';
 
 const Container = styled(Box)`
     display: flex;
@@ -14,9 +17,18 @@ const Container = styled(Box)`
     padding: 10px 15px;
 `
 
+const note = {
+    id: '',
+    heading: '',
+    text: ''
+}
+
 const Form = () => {
 
     const [showTextField, setShowTextField] = useState(false);
+    const [addNote, setAddNote] = useState({ ...note, id: uuid() });
+
+    const { notes, setNotes } = useContext(DataContext);
 
     const containerRef = useRef();
 
@@ -28,6 +40,18 @@ const Form = () => {
     const handleClickAway = () => {
         setShowTextField(false);
         containerRef.current.style.minHeight = '30px';
+
+        setAddNote({ ...note, id: uuid() });
+
+        if (addNote.heading || addNote.text) {
+            setNotes(prevArr => [addNote, ...prevArr])
+        }
+
+    }
+
+    const onTextChange = (e) => {
+        let changedNote = { ...addNote, [e.target.name]: e.target.value };
+        setAddNote(changedNote);
     }
 
     return (
@@ -39,6 +63,9 @@ const Form = () => {
                         variant="standard"
                         InputProps={{ disableUnderline: true }}
                         style={{ marginBottom: 10 }}
+                        onChange={(e) => onTextChange(e)}
+                        name='heading'
+                        value={addNote.heading}
                     />
                 }
                 <TextField
@@ -48,6 +75,9 @@ const Form = () => {
                     variant="standard"
                     InputProps={{ disableUnderline: true }}
                     onClick={onTextAreaClick}
+                    onChange={(e) => onTextChange(e)}
+                    name='text'
+                    value={addNote.text}
 
                 />
             </Container>
