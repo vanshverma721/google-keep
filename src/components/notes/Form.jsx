@@ -28,7 +28,7 @@ const Form = () => {
     const [showTextField, setShowTextField] = useState(false);
     const [addNote, setAddNote] = useState({ ...note, id: uuid() });
 
-    const { notes, setNotes } = useContext(DataContext);
+    const { setNotes } = useContext(DataContext);
 
     const containerRef = useRef();
 
