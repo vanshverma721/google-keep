@@ -1,5 +1,6 @@
 import { React, useContext } from 'react'
-import { Box, styled } from '@mui/material'
+import { Box, Grid } from '@mui/material'
+import { styled } from '@mui/material/styles';
 
 import Form from './Form'
 import Note from './Note';
@@ -19,11 +20,15 @@ const Notes = () => {
             <Box sx={{ p: 3, width: '100%' }}>
                 <DrawerHeader />
                 <Form />
-                {
-                    notes.map(note => (
-                        <Note note={note} />
-                    ))
-                }
+                <Grid container style={{ marginTop: 16 }}>
+                    {
+                        notes.map(note => (
+                            <Grid item>
+                                <Note note={note} />
+                            </Grid>
+                        ))
+                    }
+                </Grid>
             </Box>
         </Box >
     )
