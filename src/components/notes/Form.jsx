@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box, TextField } from '@mui/material'
+import React, { useState, useRef } from 'react'
+import { Box, TextField, ClickAwayListener } from '@mui/material'
 import { styled } from '@mui/material/styles';
 
 const Container = styled(Box)`
@@ -15,22 +15,43 @@ const Container = styled(Box)`
 `
 
 const Form = () => {
+
+    const [showTextField, setShowTextField] = useState(false);
+
+    const containerRef = useRef();
+
+    const onTextAreaClick = () => {
+        setShowTextField(true);
+        containerRef.current.style.minHeight = '70px';
+    }
+
+    const handleClickAway = () => {
+        setShowTextField(false);
+        containerRef.current.style.minHeight = '30px';
+    }
+
     return (
-        <Container>
-            <TextField
-                placeholder="Title"
-                variant="standard"
-                InputProps={{ disableUnderline: true }}
-                style={{ marginBottom: 10 }}
-            />
-            <TextField
-                placeholder="Take a note..."
-                multiline
-                maxRows={Infinity}
-                variant="standard"
-                InputProps={{ disableUnderline: true }}
-            />
-        </Container>
+        <ClickAwayListener onClickAway={handleClickAway}>
+            <Container ref={containerRef}>
+                {showTextField &&
+                    <TextField
+                        placeholder="Title"
+                        variant="standard"
+                        InputProps={{ disableUnderline: true }}
+                        style={{ marginBottom: 10 }}
+                    />
+                }
+                <TextField
+                    placeholder="Take a note..."
+                    multiline
+                    maxRows={Infinity}
+                    variant="standard"
+                    InputProps={{ disableUnderline: true }}
+                    onClick={onTextAreaClick}
+
+                />
+            </Container>
+        </ClickAwayListener>
     )
 }
 
