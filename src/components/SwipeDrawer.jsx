@@ -29,7 +29,6 @@ const closedMixin = (theme) => ({
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
 
@@ -51,7 +50,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const SwipeDrawer = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const handleDrawer = () => {
         setOpen(prevState => !prevState);
