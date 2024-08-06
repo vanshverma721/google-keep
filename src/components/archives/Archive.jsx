@@ -16,17 +16,17 @@ const StyledCard = styled(Card)`
 
 const Archive = ({ note }) => {
 
-    const { notes, setNotes, setAcrchiveNotes, setDeleteNotes } = useContext(DataContext);
+    const { notes, setNotes, archiveNotes, setAcrchiveNotes, setDeleteNotes } = useContext(DataContext);
 
-    const archiveNote = (note) => {
-        const updatedNotes = notes.filter(data => data.id !== note.id);
-        setNotes(updatedNotes);
-        setAcrchiveNotes(prevArr => [note, ...prevArr]);
+    const UnarchiveNote = (note) => {
+        const updatedNotes = archiveNotes.filter(data => data.id !== note.id);
+        setAcrchiveNotes(updatedNotes);
+        setNotes(prevArr => [note, ...prevArr]);
     }
 
     const deleteNote = (note) => {
-        const updatedNotes = notes.filter(data => data.id !== note.id);
-        setNotes(updatedNotes);
+        const updatedNotes = archiveNotes.filter(data => data.id !== note.id);
+        setAcrchiveNotes(updatedNotes);
         setDeleteNotes(prevArr => [note, ...prevArr]);
     }
 
@@ -40,7 +40,7 @@ const Archive = ({ note }) => {
                 <Unarchive
                     fontSize="small"
                     style={{ marginLeft: 'auto' }}
-                    onClick={() => archiveNote(note)}
+                    onClick={() => UnarchiveNote(note)}
                 />
                 <Delete
                     fontSize="small"
